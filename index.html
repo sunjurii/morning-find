@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>아침의 발견 — Morning Find</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-en">morning find</span>
+        <span class="logo-ko">아침의 발견</span>
+      </div>
+      <nav class="nav">
+        <button class="nav-btn active" data-filter="all">전체</button>
+        <button class="nav-btn" data-filter="quiet">조용한</button>
+        <button class="nav-btn" data-filter="view">뷰맛집</button>
+        <button class="nav-btn" data-filter="nature">자연</button>
+      </nav>
+      <button class="list-toggle" id="listToggle" aria-label="카페 목록 보기">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Map -->
+  <div id="map"></div>
+
+  <!-- Side Panel -->
+  <aside class="side-panel" id="sidePanel">
+    <div class="panel-header">
+      <span class="panel-count"><span id="cafeCount">12</span>곳의 카페</span>
+      <button class="panel-close" id="panelClose" aria-label="닫기">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cafe-list" id="cafeList"></div>
+  </aside>
+
+  <!-- Cafe Detail Card -->
+  <div class="detail-card" id="detailCard">
+    <button class="detail-close" id="detailClose" aria-label="닫기">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="detail-img-wrap">
+      <img class="detail-img" id="detailImg" src="" alt="" />
+      <div class="detail-tags" id="detailTags"></div>
+    </div>
+    <div class="detail-body">
+      <h2 class="detail-name" id="detailName"></h2>
+      <p class="detail-address" id="detailAddress"></p>
+      <div class="detail-meta">
+        <span class="meta-item" id="detailHours">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span></span>
+        </span>
+        <span class="meta-item" id="detailPrice">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span></span>
+        </span>
+      </div>
+      <p class="detail-desc" id="detailDesc"></p>
+      <a class="detail-link" id="detailLink" href="#" target="_blank" rel="noopener">
+        네이버 지도에서 보기
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=YOUR_CLIENT_ID&submodules=geocoder" async defer onload="initMap()"></script>
+</body>
+</html>
