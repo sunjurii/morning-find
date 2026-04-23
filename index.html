@@ -19,10 +19,15 @@
         <span class="logo-ko">아침의 발견</span>
       </div>
       <nav class="nav">
-        <button class="nav-btn active" data-filter="all">전체</button>
-        <button class="nav-btn" data-filter="quiet">조용한</button>
-        <button class="nav-btn" data-filter="view">뷰맛집</button>
-        <button class="nav-btn" data-filter="nature">자연</button>
+        <button class="nav-btn active" data-time="all">전체</button>
+        <button class="nav-btn" data-time="open8">8시 오픈</button>
+        <button class="nav-btn" data-time="open9">9시 오픈</button>
+        <button class="nav-btn" data-time="open10">10시 오픈</button>
+        <span class="nav-divider"></span>
+        <button class="nav-meal" id="mealToggle" data-active="false">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          간단한 식사
+        </button>
       </nav>
       <button class="list-toggle" id="listToggle" aria-label="카페 목록 보기">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>

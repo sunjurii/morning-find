@@ -4,7 +4,8 @@
 
 let map = null;
 let markers = [];
-let currentFilter = 'all';
+let currentTimeFilter = 'all';   // 'all' | 'open8' | 'open9' | 'open10'
+let mealFilterOn = false;         // 간단한 식사 서브 필터
 let activeMarkerId = null;
 let panelOpen = false;
 
@@ -43,14 +44,32 @@ function initMap() {
   });
 
   hideLoading();
-  renderMarkers(CAFES);
-  renderCafeList(CAFES);
+  applyFilter();
   setupEvents();
+}
+
+// ── Filter logic ──────────────────────────────────────────────
+function getFiltered() {
+  let result = CAFES;
+  if (currentTimeFilter !== 'all') {
+    result = result.filter(c => c.tags.includes(currentTimeFilter));
+  }
+  if (mealFilterOn) {
+    result = result.filter(c => c.tags.includes('meal'));
+  }
+  return result;
+}
+
+function applyFilter() {
+  const filtered = getFiltered();
+  if (map) renderMarkers(filtered);
+  renderCafeList(filtered);
+  closeDetail();
+  if (CAFES.length > 0 && filtered.length === 0) showToast('해당하는 카페가 없습니다');
 }
 
 // ── Markers ───────────────────────────────────────────────────
 function renderMarkers(cafes) {
-  // Remove old markers
   markers.forEach(m => m.marker.setMap(null));
   markers = [];
 
@@ -93,6 +112,13 @@ function renderCafeList(cafes) {
   const count = document.getElementById('cafeCount');
   count.textContent = cafes.length;
 
+  if (cafes.length === 0) {
+    list.innerHTML = `<p style="text-align:center; padding:40px 20px; font-size:13px; color:var(--gray-3); line-height:1.8;">
+      등록된 카페가 없습니다.<br/>data.js에 카페를 추가해주세요.
+    </p>`;
+    return;
+  }
+
   list.innerHTML = cafes.map(c => `
     <div class="cafe-item" data-id="${c.id}" role="button" tabindex="0">
       <img class="cafe-thumb" src="${c.img}" alt="${c.name}" loading="lazy" />
@@ -112,7 +138,6 @@ function renderCafeList(cafes) {
       openDetail(cafe);
       setActiveMarker(cafe.id);
       panToMarker(cafe);
-      // on mobile close panel
       if (window.innerWidth <= 768) closePanel();
     };
     item.addEventListener('click', handler);
@@ -121,10 +146,10 @@ function renderCafeList(cafes) {
 }
 
 function getTagClass(label) {
-  if (label === '조용한') return 'quiet';
-  if (label === '뷰맛집') return 'view';
-  if (label === '자연') return 'nature';
-  if (label === '이른 오픈') return 'early';
+  if (label === '8시 오픈') return 'open8';
+  if (label === '9시 오픈') return 'open9';
+  if (label === '10시 오픈') return 'open10';
+  if (label === '식사 가능') return 'meal';
   return '';
 }
 
@@ -146,7 +171,6 @@ function openDetail(cafe) {
   card.classList.add('open');
   if (panelOpen) card.classList.add('panel-open');
 
-  // Highlight list item
   document.querySelectorAll('.cafe-item').forEach(el => {
     el.classList.toggle('active', parseInt(el.dataset.id) === cafe.id);
   });
@@ -173,16 +197,6 @@ function closePanel() {
   document.getElementById('detailCard').classList.remove('panel-open');
 }
 
-// ── Filter ────────────────────────────────────────────────────
-function applyFilter(filter) {
-  currentFilter = filter;
-  const filtered = filter === 'all' ? CAFES : CAFES.filter(c => c.tags.includes(filter));
-  renderMarkers(filtered);
-  renderCafeList(filtered);
-  closeDetail();
-  if (filtered.length === 0) showToast('해당하는 카페가 없습니다');
-}
-
 // ── Pan to marker ─────────────────────────────────────────────
 function panToMarker(cafe) {
   if (!map) return;
@@ -201,13 +215,23 @@ function showToast(msg) {
 
 // ── Events ────────────────────────────────────────────────────
 function setupEvents() {
-  // Filter buttons
+  // Time filter buttons
   document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      applyFilter(btn.dataset.filter);
+      currentTimeFilter = btn.dataset.time;
+      applyFilter();
     });
+  });
+
+  // Meal sub-filter toggle
+  const mealBtn = document.getElementById('mealToggle');
+  mealBtn.addEventListener('click', () => {
+    mealFilterOn = !mealFilterOn;
+    mealBtn.classList.toggle('active', mealFilterOn);
+    mealBtn.dataset.active = mealFilterOn;
+    applyFilter();
   });
 
   // List toggle
@@ -226,7 +250,7 @@ function setupEvents() {
     naver.maps.Event.addListener(map, 'click', closeDetail);
   }
 
-  // Swipe down to close detail on mobile
+  // Swipe down to close on mobile
   setupSwipeClose();
 }
 
@@ -235,22 +259,19 @@ function setupSwipeClose() {
   let startY = 0;
   card.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
   card.addEventListener('touchend', e => {
-    const dy = e.changedTouches[0].clientY - startY;
-    if (dy > 60) closeDetail();
+    if (e.changedTouches[0].clientY - startY > 60) closeDetail();
   }, { passive: true });
 
   const panel = document.getElementById('sidePanel');
   panel.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
   panel.addEventListener('touchend', e => {
-    const dy = e.changedTouches[0].clientY - startY;
-    if (dy > 80) closePanel();
+    if (e.changedTouches[0].clientY - startY > 80) closePanel();
   }, { passive: true });
 }
 
-// ── Fallback: if Naver SDK fails, show demo mode ──────────────
+// ── Fallback: API key 미설정 시 데모 모드 ─────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   showLoading();
-  // Timeout fallback for when API key is not set
   setTimeout(() => {
     if (!map) {
       hideLoading();
@@ -269,29 +290,10 @@ function showDemoMode() {
     ">
       <p style="font-family:'DM Serif Display',serif; font-size:28px; color:#2c1f14; opacity:0.5;">morning find</p>
       <p style="font-size:13px; color:#6b5c4f; text-align:center; max-width:300px; line-height:1.7;">
-        네이버 지도 API 키를 설정하면<br/>지도가 활성화됩니다.<br/><br/>
-        <code style="background:#ede7dc; padding:4px 10px; border-radius:6px; font-size:11px;">index.html</code> 의<br/>
-        <code style="background:#ede7dc; padding:4px 10px; border-radius:6px; font-size:11px;">YOUR_CLIENT_ID</code> 를 교체해주세요.
+        네이버 지도 API 키를 설정하면<br/>지도가 활성화됩니다.
       </p>
     </div>
   `;
-  renderCafeList(CAFES);
-  setupFilterEvents();
-}
-
-function setupFilterEvents() {
-  document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      const filtered = filter === 'all' ? CAFES : CAFES.filter(c => c.tags.includes(filter));
-      renderCafeList(filtered);
-    });
-  });
-  document.getElementById('listToggle').addEventListener('click', () => {
-    if (panelOpen) closePanel(); else openPanel();
-  });
-  document.getElementById('panelClose').addEventListener('click', closePanel);
-  document.getElementById('detailClose').addEventListener('click', closeDetail);
+  applyFilter();
+  setupEvents();
 }

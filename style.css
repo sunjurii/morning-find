@@ -118,6 +118,45 @@ html, body {
   color: var(--white);
 }
 
+.nav-divider {
+  flex-shrink: 0;
+  width: 1px;
+  height: 18px;
+  background: var(--gray-2);
+  align-self: center;
+  margin: 0 2px;
+}
+
+.nav-meal {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border: 1px dashed var(--gray-2);
+  border-radius: 20px;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-meal:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.nav-meal.active {
+  background: #fef3ec;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-weight: 500;
+}
+
 .list-toggle {
   flex-shrink: 0;
   width: 36px;
@@ -342,10 +381,10 @@ html, body {
   font-weight: 400;
 }
 
-.tag.quiet { background: #e8f0e8; color: #3a6340; }
-.tag.view { background: #e8ecf5; color: #2d4a7a; }
-.tag.nature { background: #f0ece0; color: #6b5c2a; }
-.tag.early { background: #fce8e0; color: #7a3020; }
+.tag.open8  { background: #fce8e0; color: #7a3020; }
+.tag.open9  { background: #e8f0e8; color: #3a6340; }
+.tag.open10 { background: #e8ecf5; color: #2d4a7a; }
+.tag.meal   { background: #fef3ec; color: #b05a20; border: 1px solid #f4c4a0; }
 
 /* ===========================
    Detail Card
