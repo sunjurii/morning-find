@@ -4,23 +4,34 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --peach:       #F5B49A;
-  --peach-dark:  #D8845A;
-  --peach-pale:  #FEF0E6;
-  --cream:       #FEF6EE;
+  --peach:      #F2C0A0;
+  --peach-dark: #C8845A;
+  --peach-pale: #FCE8D4;
+  --cream:      #FEF6EE;
 
-  --green:   #52B788;
-  --blue:    #4A8FD4;
-  --orange:  #F07232;
-  --red:     #E84040;
-  --purple:  #9258D8;
-  --yellow:  #F5C030;
-  --pink:    #E8609A;
+  /* Colorful palette */
+  --col-yellow:   #F5D020;
+  --col-lime:     #7EC820;
+  --col-olive:    #9AAB28;
+  --col-orange:   #F56A20;
+  --col-red:      #E83028;
+  --col-blue:     #3478D8;
+  --col-lavender: #A870E8;
+  --col-pink:     #F04890;
+
+  /* Alias vars used in non-header sections */
+  --green:   #7EC820;
+  --blue:    #3478D8;
+  --orange:  #F56A20;
+  --red:     #E83028;
+  --purple:  #A870E8;
+  --yellow:  #F5D020;
+  --pink:    #F04890;
 
   --ink:     #1A0A04;
   --ink-mid: #6B3820;
 
-  /* Organic blob border-radius presets */
+  /* Blob border-radius presets */
   --blob-1: 62% 38% 46% 54% / 44% 58% 42% 56%;
   --blob-2: 38% 62% 56% 44% / 58% 44% 56% 42%;
   --blob-3: 50% 50% 38% 62% / 62% 38% 50% 50%;
@@ -28,9 +39,9 @@
   --blob-5: 56% 44% 44% 56% / 38% 56% 50% 50%;
   --blob-6: 48% 52% 58% 42% / 56% 46% 54% 44%;
 
-  --header-h: 68px;
-  --font-display: 'Fredoka', sans-serif;
-  --font-body:    'Nunito', 'Noto Sans KR', sans-serif;
+  --header-h: 72px;
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'Syne', 'Noto Sans KR', sans-serif;
   --font-ko:      'Noto Sans KR', sans-serif;
 }
 
@@ -55,26 +66,26 @@ html, body {
   overflow: hidden;
 }
 
-/* Decorative blobs in header corners */
+/* Decorative organic blobs in header */
 .header::before {
   content: '';
   position: absolute;
-  width: 88px; height: 88px;
-  background: var(--green);
-  border-radius: var(--blob-1);
-  left: -22px; top: -22px;
-  opacity: 0.38;
+  width: 105px; height: 105px;
+  background: var(--col-lime);
+  border-radius: 70% 30% 50% 50% / 40% 60% 40% 60%;
+  left: -30px; top: -35px;
+  opacity: 0.4;
   pointer-events: none;
 }
 
 .header::after {
   content: '';
   position: absolute;
-  width: 65px; height: 65px;
-  background: var(--yellow);
-  border-radius: var(--blob-4);
-  right: -12px; top: -12px;
-  opacity: 0.55;
+  width: 78px; height: 78px;
+  background: var(--col-lavender);
+  border-radius: 40% 60% 55% 45% / 60% 40% 60% 40%;
+  right: -18px; top: -18px;
+  opacity: 0.52;
   pointer-events: none;
 }
 
@@ -82,7 +93,7 @@ html, body {
   position: relative;
   z-index: 1;
   height: 100%;
-  padding: 0 16px;
+  padding: 0 18px;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -96,28 +107,42 @@ html, body {
   flex-direction: column;
   line-height: 1;
   flex-shrink: 0;
-  gap: 2px;
+  gap: 3px;
 }
 
 .logo-en {
   font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 800;
   color: var(--ink);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.035em;
+  text-transform: lowercase;
 }
 
 .logo-en em {
   font-style: normal;
-  color: var(--orange);
+  color: var(--col-orange);
 }
 
 .logo-ko {
   font-family: var(--font-ko);
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
   color: var(--ink-mid);
+}
+
+/* ===========================
+   Bounce keyframe
+=========================== */
+@keyframes btn-bounce {
+  0%   { transform: translateY(0)    rotate(var(--rot, 0deg)); }
+  28%  { transform: translateY(-8px) rotate(var(--rot, 0deg)); }
+  48%  { transform: translateY(-2px) rotate(var(--rot, 0deg)); }
+  65%  { transform: translateY(-6px) rotate(var(--rot, 0deg)); }
+  80%  { transform: translateY(-3px) rotate(var(--rot, 0deg)); }
+  91%  { transform: translateY(-5px) rotate(var(--rot, 0deg)); }
+  100% { transform: translateY(-4px) rotate(var(--rot, 0deg)); }
 }
 
 /* ===========================
@@ -125,7 +150,7 @@ html, body {
 =========================== */
 .nav {
   display: flex;
-  gap: 6px;
+  gap: 7px;
   flex: 1;
   overflow-x: auto;
   scrollbar-width: none;
@@ -135,31 +160,71 @@ html, body {
 
 .nav-btn {
   --btn-color: #888;
+  --btn-text:  #fff;
+  --rot: 0deg;
   flex-shrink: 0;
-  padding: 7px 16px;
+  padding: 8px 18px;
   border: 2.5px solid var(--btn-color);
   background: transparent;
   color: var(--btn-color);
   font-family: var(--font-display);
-  font-size: 13.5px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.18s, color 0.18s, transform 0.1s;
   white-space: nowrap;
   line-height: 1;
+  transform: translateY(0) rotate(var(--rot));
+  transition: background 0.16s ease, color 0.16s ease,
+              transform 0.38s cubic-bezier(0.2, 0, 0.38, 1);
 }
-.nav-btn:active { transform: scale(0.94); }
 
-/* Per-button organic shapes + colors */
-.nav-btn[data-time="all"]    { --btn-color: var(--green);  border-radius: var(--blob-1); }
-.nav-btn[data-time="open8"]  { --btn-color: var(--orange); border-radius: var(--blob-2); }
-.nav-btn[data-time="open9"]  { --btn-color: var(--blue);   border-radius: var(--blob-3); }
-.nav-btn[data-time="open10"] { --btn-color: var(--purple); border-radius: var(--blob-4); }
+/* Hover: fill + bounce animation */
+.nav-btn:hover {
+  background: var(--btn-color);
+  color: var(--btn-text);
+  animation: btn-bounce 0.5s ease-out both;
+}
 
-.nav-btn:hover,
+/* Active state: press down (overrides animation) */
+.nav-btn:active {
+  animation: none !important;
+  transform: translateY(2px) rotate(var(--rot)) !important;
+  transition-duration: 0.08s !important;
+}
+
+/* Filled state when selected */
 .nav-btn.active {
   background: var(--btn-color);
-  color: #fff;
+  color: var(--btn-text);
+}
+
+/* Per-button: unique color, blob shape, rotation */
+.nav-btn[data-time="all"] {
+  --btn-color: var(--col-yellow);
+  --btn-text:  var(--ink);
+  --rot: -2deg;
+  border-radius: 62% 38% 46% 54% / 44% 58% 42% 56%;
+}
+
+.nav-btn[data-time="open8"] {
+  --btn-color: var(--col-lime);
+  --btn-text:  var(--ink);
+  --rot: 1.5deg;
+  border-radius: 40% 60% 55% 45% / 58% 42% 58% 42%;
+}
+
+.nav-btn[data-time="open9"] {
+  --btn-color: var(--col-orange);
+  --btn-text:  #fff;
+  --rot: -1deg;
+  border-radius: 52% 48% 36% 64% / 64% 36% 52% 48%;
+}
+
+.nav-btn[data-time="open10"] {
+  --btn-color: var(--col-blue);
+  --btn-text:  #fff;
+  --rot: 2deg;
+  border-radius: 44% 56% 64% 36% / 48% 64% 36% 52%;
 }
 
 .nav-divider {
@@ -167,39 +232,55 @@ html, body {
   width: 5px; height: 5px;
   background: var(--ink);
   border-radius: 50%;
-  opacity: 0.22;
+  opacity: 0.2;
   margin: 0 1px;
 }
 
 /* Meal sub-filter toggle */
 .nav-meal {
-  --btn-color: var(--red);
+  --btn-color: var(--col-pink);
+  --btn-text:  #fff;
+  --rot: -1.5deg;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 7px 14px;
+  padding: 8px 15px;
   border: 2.5px dashed var(--btn-color);
-  border-radius: var(--blob-5);
+  border-radius: 56% 44% 44% 56% / 38% 56% 48% 52%;
   background: transparent;
   color: var(--btn-color);
   font-family: var(--font-display);
-  font-size: 13.5px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.18s, color 0.18s, border-style 0.18s, transform 0.1s;
   white-space: nowrap;
   line-height: 1;
+  transform: translateY(0) rotate(var(--rot));
+  transition: background 0.16s ease, color 0.16s ease, border-style 0.16s ease,
+              transform 0.38s cubic-bezier(0.2, 0, 0.38, 1);
 }
-.nav-meal:active { transform: scale(0.94); }
-.nav-meal:hover,
+
+.nav-meal:hover {
+  background: var(--btn-color);
+  color: var(--btn-text);
+  border-style: solid;
+  animation: btn-bounce 0.5s ease-out both;
+}
+
+.nav-meal:active {
+  animation: none !important;
+  transform: translateY(2px) rotate(var(--rot)) !important;
+  transition-duration: 0.08s !important;
+}
+
 .nav-meal.active {
   background: var(--btn-color);
-  color: #fff;
+  color: var(--btn-text);
   border-style: solid;
 }
 
-/* List toggle button */
+/* List toggle */
 .list-toggle {
   flex-shrink: 0;
   width: 38px; height: 38px;
@@ -211,10 +292,18 @@ html, body {
   align-items: center;
   justify-content: center;
   color: var(--ink);
-  transition: background 0.18s, color 0.18s, transform 0.1s;
+  transition: background 0.16s, color 0.16s,
+              transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.list-toggle:hover { background: var(--ink); color: var(--peach); }
-.list-toggle:active { transform: scale(0.93); }
+.list-toggle:hover {
+  background: var(--ink);
+  color: var(--peach);
+  transform: translateY(-3px);
+}
+.list-toggle:active {
+  transform: translateY(1px);
+  transition-duration: 0.08s;
+}
 
 /* ===========================
    Map
@@ -669,8 +758,8 @@ html, body {
 }
 
 @media (max-width: 400px) {
-  .logo-en { font-size: 20px; }
+  .logo-en { font-size: 18px; }
   .header-inner { padding: 0 12px; gap: 10px; }
-  .nav-btn  { padding: 6px 12px; font-size: 12.5px; }
-  .nav-meal { padding: 6px 11px; font-size: 12.5px; }
+  .nav-btn  { padding: 7px 12px; font-size: 12px; }
+  .nav-meal { padding: 7px 11px; font-size: 12px; }
 }
