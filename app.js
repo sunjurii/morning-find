@@ -74,8 +74,9 @@ function renderMarkers(cafes) {
   markers = [];
 
   cafes.forEach(cafe => {
+    const timeTag = cafe.tags.find(t => t.startsWith('open')) || '';
     const markerEl = document.createElement('div');
-    markerEl.className = 'custom-marker';
+    markerEl.className = `custom-marker${timeTag ? ' marker-' + timeTag : ''}`;
     markerEl.innerHTML = `
       <div class="marker-label">${cafe.name}</div>
       <div class="marker-dot"></div>
