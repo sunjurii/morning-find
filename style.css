@@ -61,32 +61,14 @@ html, body {
   top: 0; left: 0; right: 0;
   z-index: 200;
   height: var(--header-h);
-  background: var(--peach);
+  background:
+    radial-gradient(ellipse at 10% 70%, rgba(255, 210, 100, 0.72) 0%, transparent 52%),
+    radial-gradient(ellipse at 50% 20%, rgba(255, 230, 140, 0.60) 0%, transparent 48%),
+    radial-gradient(ellipse at 82% 60%, rgba(255, 168, 148, 0.68) 0%, transparent 50%),
+    radial-gradient(ellipse at 65% 100%, rgba(255, 195, 160, 0.55) 0%, transparent 45%),
+    linear-gradient(115deg, #d8eeaa 0%, #eee890 28%, #f5d8a8 58%, #f5c8c0 100%);
   border-bottom: 2.5px solid var(--ink);
   overflow: hidden;
-}
-
-/* Decorative organic blobs in header */
-.header::before {
-  content: '';
-  position: absolute;
-  width: 105px; height: 105px;
-  background: var(--col-lime);
-  border-radius: 70% 30% 50% 50% / 40% 60% 40% 60%;
-  left: -30px; top: -35px;
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.header::after {
-  content: '';
-  position: absolute;
-  width: 78px; height: 78px;
-  background: var(--col-lavender);
-  border-radius: 40% 60% 55% 45% / 60% 40% 60% 40%;
-  right: -18px; top: -18px;
-  opacity: 0.52;
-  pointer-events: none;
 }
 
 .header-inner {
@@ -200,29 +182,29 @@ html, body {
 
 /* Per-button: unique color, blob shape, rotation */
 .nav-btn[data-time="all"] {
-  --btn-color: var(--col-yellow);
+  --btn-color: #e8d080;
   --btn-text:  var(--ink);
   --rot: -2deg;
   border-radius: 62% 38% 46% 54% / 44% 58% 42% 56%;
 }
 
 .nav-btn[data-time="open8"] {
-  --btn-color: var(--col-lime);
+  --btn-color: #b8d898;
   --btn-text:  var(--ink);
   --rot: 1.5deg;
   border-radius: 40% 60% 55% 45% / 58% 42% 58% 42%;
 }
 
 .nav-btn[data-time="open9"] {
-  --btn-color: var(--col-orange);
-  --btn-text:  #fff;
+  --btn-color: #f0bea0;
+  --btn-text:  var(--ink);
   --rot: -1deg;
   border-radius: 52% 48% 36% 64% / 64% 36% 52% 48%;
 }
 
 .nav-btn[data-time="open10"] {
-  --btn-color: var(--col-blue);
-  --btn-text:  #fff;
+  --btn-color: #a8c8e8;
+  --btn-text:  var(--ink);
   --rot: 2deg;
   border-radius: 44% 56% 64% 36% / 48% 64% 36% 52%;
 }
@@ -238,8 +220,8 @@ html, body {
 
 /* Meal sub-filter toggle */
 .nav-meal {
-  --btn-color: var(--col-pink);
-  --btn-text:  #fff;
+  --btn-color: #e8aac8;
+  --btn-text:  var(--ink);
   --rot: -1.5deg;
   flex-shrink: 0;
   display: flex;
