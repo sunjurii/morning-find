@@ -137,13 +137,13 @@ html, body {
 
 .nav-btn {
   --btn-color: #888;
-  --btn-text:  #fff;
+  --btn-text:  var(--ink);
   --rot: 0deg;
   flex-shrink: 0;
   padding: 8px 18px;
   border: 2.5px solid var(--btn-color);
-  background: transparent;
-  color: var(--btn-color);
+  background: var(--btn-color);
+  color: var(--btn-text);
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 700;
@@ -155,10 +155,8 @@ html, body {
               transform 0.38s cubic-bezier(0.2, 0, 0.38, 1);
 }
 
-/* Hover: fill + bounce animation */
+/* Hover: slight lift */
 .nav-btn:hover {
-  background: var(--btn-color);
-  color: var(--btn-text);
   animation: btn-bounce 0.5s ease-out both;
 }
 
@@ -169,10 +167,10 @@ html, body {
   transition-duration: 0.08s !important;
 }
 
-/* Filled state when selected */
+/* Outline state when selected */
 .nav-btn.active {
-  background: var(--btn-color);
-  color: var(--btn-text);
+  background: #ffffff;
+  color: var(--btn-color);
 }
 
 /* Per-button: unique color, blob shape, rotation */
@@ -223,10 +221,10 @@ html, body {
   align-items: center;
   gap: 5px;
   padding: 8px 15px;
-  border: 2.5px dashed var(--btn-color);
+  border: 2.5px solid var(--btn-color);
   border-radius: 56% 44% 44% 56% / 38% 56% 48% 52%;
-  background: transparent;
-  color: var(--btn-color);
+  background: var(--btn-color);
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 700;
@@ -234,14 +232,11 @@ html, body {
   white-space: nowrap;
   line-height: 1;
   transform: translateY(0) rotate(var(--rot));
-  transition: background 0.16s ease, color 0.16s ease, border-style 0.16s ease,
+  transition: background 0.16s ease, color 0.16s ease,
               transform 0.38s cubic-bezier(0.2, 0, 0.38, 1);
 }
 
 .nav-meal:hover {
-  background: var(--btn-color);
-  color: var(--btn-text);
-  border-style: solid;
   animation: btn-bounce 0.5s ease-out both;
 }
 
@@ -252,9 +247,8 @@ html, body {
 }
 
 .nav-meal.active {
-  background: var(--btn-color);
-  color: var(--btn-text);
-  border-style: solid;
+  background: #ffffff;
+  color: var(--btn-color);
 }
 
 /* List toggle */
