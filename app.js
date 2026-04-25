@@ -183,73 +183,29 @@ function closeDetail() {
   document.querySelectorAll('.cafe-item').forEach(el => el.classList.remove('active'));
 }
 
-// ── Naver iframe panel ────────────────────────────────────────
-let currentNaverCafe = null;
-
+// ── Info panel (pin click) ────────────────────────────────────
 function openNaverPanel(cafe) {
-  currentNaverCafe = cafe;
-  const panel = document.getElementById('naverPanel');
-  const iframe = document.getElementById('naverIframe');
-  const fallback = document.getElementById('naverIframeFallback');
+  document.getElementById('infoCafeName').textContent = cafe.name;
+  document.getElementById('infoDesc').textContent = cafe.desc || '';
 
-  document.getElementById('naverPanelName').textContent = cafe.name;
-  iframe.style.display = 'block';
-  fallback.style.display = 'none';
-
-  // Reset handlers
-  iframe.onload = null;
-  iframe.onerror = null;
-  iframe.src = 'about:blank';
-
-  if (!cafe.naverUrl) {
-    triggerNaverFallback(cafe);
-    panel.classList.add('open');
-    return;
-  }
-
-  iframe.onload = function () {
-    try {
-      const href = iframe.contentWindow.location.href;
-      // about:blank means blocked by X-Frame-Options
-      if (href === 'about:blank' && iframe.dataset.loaded === 'true') {
-        triggerNaverFallback(cafe);
-      }
-    } catch (e) {
-      // SecurityError = cross-origin, loaded successfully
-    }
-    iframe.dataset.loaded = 'true';
-  };
-
-  iframe.onerror = function () {
-    triggerNaverFallback(cafe);
-  };
-
-  // Small delay to let onload for about:blank fire first
-  setTimeout(() => { iframe.src = cafe.naverUrl; }, 30);
-
-  panel.classList.add('open');
-}
-
-function triggerNaverFallback(cafe) {
-  const iframe = document.getElementById('naverIframe');
-  const fallback = document.getElementById('naverIframeFallback');
-  iframe.style.display = 'none';
-  fallback.style.display = 'flex';
+  const btn = document.getElementById('infoNaverBtn');
   if (cafe.naverUrl) {
-    window.open(cafe.naverUrl, '_blank', 'noopener,noreferrer');
-    showToast('네이버 지도를 새 탭에서 열었습니다');
+    btn.href = cafe.naverUrl;
+    btn.style.display = 'inline-flex';
+  } else {
+    btn.style.display = 'none';
   }
+
+  const badges = document.getElementById('infoBadges');
+  badges.innerHTML = cafe.tagLabels.map(t =>
+    `<span class="tag ${getTagClass(t)}">${t}</span>`
+  ).join('');
+
+  document.getElementById('infoPanel').classList.add('open');
 }
 
 function closeNaverPanel() {
-  const panel = document.getElementById('naverPanel');
-  const iframe = document.getElementById('naverIframe');
-  panel.classList.remove('open');
-  setTimeout(() => {
-    iframe.src = '';
-    iframe.dataset.loaded = '';
-    currentNaverCafe = null;
-  }, 400);
+  document.getElementById('infoPanel').classList.remove('open');
 }
 
 // ── Panel ─────────────────────────────────────────────────────
@@ -315,17 +271,10 @@ function setupEvents() {
   // Detail close
   document.getElementById('detailClose').addEventListener('click', closeDetail);
 
-  // Naver panel close
-  document.getElementById('naverPanelClose').addEventListener('click', closeNaverPanel);
+  // Info panel close
+  document.getElementById('infoPanelClose').addEventListener('click', closeNaverPanel);
 
-  // Fallback reopen button
-  document.getElementById('fallbackReopenBtn').addEventListener('click', () => {
-    if (currentNaverCafe && currentNaverCafe.naverUrl) {
-      window.open(currentNaverCafe.naverUrl, '_blank', 'noopener,noreferrer');
-    }
-  });
-
-  // Click map to close detail and naver panel
+  // Click map to close detail and info panel
   if (map) {
     naver.maps.Event.addListener(map, 'click', () => {
       closeDetail();
