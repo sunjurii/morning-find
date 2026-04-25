@@ -37,16 +37,16 @@
 const CAFES = [
   {
     id: 1,
-    name: "테스트카페",
-    address: "서울 마포구",
-    lat: 37.5550,
-    lng: 126.9700,
-    tags: ["open9"],
-    tagLabels: ["9시 오픈"],
-    hours: "09:00 — 21:00",
-    price: "아메리카노 4,500원~",
-    desc: "테스트용 카페입니다.",
+    name: "보난자 커피 군자로",
+    address: "서울 광진구 능동로 239-1 2동 1층",
+    lat: 37.5516,
+    lng: 127.0762,
+    tags: ["open8", "meal"],
+    tagLabels: ["8시 오픈", "식사 가능"],
+    hours: "08:30 — 21:00",
+    price: "-",
+    desc: "오전 8시 30분 오픈. 베를린 스페셜티 커피 브랜드.",
     img: "",
-    naverUrl: "https://map.naver.com/v5/search/테스트카페"
+    naverUrl: "https://naver.me/xf5AOpXM"
   }
 ];
