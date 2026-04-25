@@ -186,26 +186,21 @@ function closeDetail() {
 // ── Info panel (pin click) ────────────────────────────────────
 function openNaverPanel(cafe) {
   document.getElementById('infoCafeName').textContent = cafe.name;
-  document.getElementById('infoDesc').textContent = cafe.desc || '';
 
-  const btn = document.getElementById('infoNaverBtn');
-  if (cafe.naverUrl) {
-    btn.href = cafe.naverUrl;
-    btn.style.display = 'inline-flex';
-  } else {
-    btn.style.display = 'none';
-  }
-
-  const badges = document.getElementById('infoBadges');
-  badges.innerHTML = cafe.tagLabels.map(t =>
+  document.getElementById('infoBadges').innerHTML = cafe.tagLabels.map(t =>
     `<span class="tag ${getTagClass(t)}">${t}</span>`
   ).join('');
+
+  const iframe = document.getElementById('naverIframe');
+  iframe.src = cafe.naverUrl || '';
 
   document.getElementById('infoPanel').classList.add('open');
 }
 
 function closeNaverPanel() {
+  const iframe = document.getElementById('naverIframe');
   document.getElementById('infoPanel').classList.remove('open');
+  setTimeout(() => { iframe.src = ''; }, 400);
 }
 
 // ── Panel ─────────────────────────────────────────────────────
