@@ -122,7 +122,7 @@ function renderCafeList(cafes) {
 
   list.innerHTML = cafes.map(c => `
     <div class="cafe-item" data-id="${c.id}" role="button" tabindex="0">
-      <img class="cafe-thumb" src="${c.img}" alt="${c.name}" loading="lazy" />
+      <img class="cafe-thumb" src="${c.img}" alt="${c.name}" loading="lazy" data-name="${c.name}" data-color="${getFallbackColor(c)}" onerror="imgFallback(this)" />
       <div class="cafe-info">
         <div class="cafe-item-name">${c.name}</div>
         <div class="cafe-item-addr">${c.address}</div>
@@ -150,19 +150,67 @@ function getTagClass(label) {
   if (label === '8시 오픈') return 'open8';
   if (label === '9시 오픈') return 'open9';
   if (label === '10시 오픈') return 'open10';
-  if (label === '식사 가능') return 'meal';
+  if (label === '간단한 식사') return 'meal';
   return '';
+}
+
+// ── Image fallback ────────────────────────────────────────────
+function getFallbackColor(cafe) {
+  const t = (cafe.tags || []).find(tag => tag.startsWith('open'));
+  if (t === 'open8')  return '#FDB52A';
+  if (t === 'open9')  return '#FF6C1F';
+  if (t === 'open10') return '#D4B8DE';
+  return '#FEBAED';
+}
+
+function imgFallback(img) {
+  const name  = img.dataset.name || img.alt || '';
+  const bg    = img.dataset.color || '#FDB52A';
+  const isDark = bg === '#FF6C1F';
+  const fb = document.createElement('div');
+  fb.className = img.className;
+  Object.assign(fb.style, {
+    background:     bg,
+    display:        'flex',
+    alignItems:     'center',
+    justifyContent: 'center',
+    fontFamily:     'var(--font-display)',
+    fontWeight:     '800',
+    fontSize:       '20px',
+    color:          isDark ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.5)',
+    flexShrink:     '0',
+  });
+  fb.textContent = name.charAt(0) || '?';
+  img.replaceWith(fb);
 }
 
 // ── Detail card ───────────────────────────────────────────────
 function openDetail(cafe) {
   const card = document.getElementById('detailCard');
-  document.getElementById('detailImg').src = cafe.img;
-  document.getElementById('detailImg').alt = cafe.name;
+
+  const img = document.getElementById('detailImg');
+  img.onerror = null;
+  img.style.display = 'block';
+  img.style.background = '';
+  img.alt = cafe.name;
+  img.src = cafe.img || '';
+  img.onerror = function () {
+    this.onerror = null;
+    this.style.background = getFallbackColor(cafe);
+    this.src = '';
+  };
+
   document.getElementById('detailName').textContent = cafe.name;
   document.getElementById('detailAddress').textContent = cafe.address;
   document.getElementById('detailHours').querySelector('span').textContent = cafe.hours;
-  document.getElementById('detailPrice').querySelector('span').textContent = cafe.price;
+
+  const priceSpan = document.getElementById('detailPrice').querySelector('span');
+  if (cafe.vanillaLattePrice) {
+    priceSpan.textContent = `바닐라 라떼 ₩${cafe.vanillaLattePrice.toLocaleString()}`;
+  } else {
+    priceSpan.textContent = cafe.price || '';
+  }
+
   document.getElementById('detailDesc').textContent = cafe.desc;
   document.getElementById('detailLink').href = cafe.naverUrl;
   document.getElementById('detailTags').innerHTML = cafe.tagLabels.map(t =>

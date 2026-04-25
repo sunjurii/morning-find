@@ -10,9 +10,10 @@
 //             간단한 식사 가능: "meal"  (없으면 생략)
 //             예) tags: ["open9", "meal"]
 // tagLabels : 화면에 표시할 태그 텍스트 배열 (tags 순서와 맞춤)
-//             예) tagLabels: ["9시 오픈", "식사 가능"]
+//             예) tagLabels: ["9시 오픈", "간단한 식사"]
 // hours     : 영업 시간 문자열  예) "09:00 — 21:00"
 // price     : 대표 메뉴 가격    예) "아메리카노 5,500원~"
+// vanillaLattePrice : 아이스 바닐라 라떼 가격 (숫자, 원 단위)  예) 6000
 // desc      : 한두 줄 설명
 // img       : 카페 이미지 URL
 // naverUrl  : 네이버 지도 링크
@@ -25,7 +26,7 @@
 //   lat: 37.5800,
 //   lng: 126.9850,
 //   tags: ["open8", "meal"],
-//   tagLabels: ["8시 오픈", "식사 가능"],
+//   tagLabels: ["8시 오픈", "간단한 식사"],
 //   hours: "08:00 — 21:00",
 //   price: "아메리카노 5,500원~",
 //   desc: "카페 소개 문구",
@@ -42,9 +43,10 @@ const CAFES = [
     lat: 37.5516,
     lng: 127.0762,
     tags: ["open8", "meal"],
-    tagLabels: ["8시 오픈", "식사 가능"],
+    tagLabels: ["8시 오픈", "간단한 식사"],
     hours: "08:30 — 21:00",
     price: "-",
+    vanillaLattePrice: 6000,
     desc: "오전 8시 30분 오픈. 베를린 스페셜티 커피 브랜드.",
     img: "",
     naverUrl: "https://naver.me/xf5AOpXM"

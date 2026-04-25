@@ -604,6 +604,13 @@ html, body {
   color: var(--ink-mid);
 }
 
+.price-symbol {
+  font-family: var(--font-ko);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-mid);
+}
+
 .detail-desc {
   font-family: var(--font-ko);
   font-size: 13px;
