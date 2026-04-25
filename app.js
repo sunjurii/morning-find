@@ -92,7 +92,7 @@ function renderMarkers(cafes) {
     });
 
     naver.maps.Event.addListener(marker, 'click', () => {
-      openDetail(cafe);
+      openNaverPanel(cafe);
       setActiveMarker(cafe.id);
     });
 
@@ -183,6 +183,75 @@ function closeDetail() {
   document.querySelectorAll('.cafe-item').forEach(el => el.classList.remove('active'));
 }
 
+// ── Naver iframe panel ────────────────────────────────────────
+let currentNaverCafe = null;
+
+function openNaverPanel(cafe) {
+  currentNaverCafe = cafe;
+  const panel = document.getElementById('naverPanel');
+  const iframe = document.getElementById('naverIframe');
+  const fallback = document.getElementById('naverIframeFallback');
+
+  document.getElementById('naverPanelName').textContent = cafe.name;
+  iframe.style.display = 'block';
+  fallback.style.display = 'none';
+
+  // Reset handlers
+  iframe.onload = null;
+  iframe.onerror = null;
+  iframe.src = 'about:blank';
+
+  if (!cafe.naverUrl) {
+    triggerNaverFallback(cafe);
+    panel.classList.add('open');
+    return;
+  }
+
+  iframe.onload = function () {
+    try {
+      const href = iframe.contentWindow.location.href;
+      // about:blank means blocked by X-Frame-Options
+      if (href === 'about:blank' && iframe.dataset.loaded === 'true') {
+        triggerNaverFallback(cafe);
+      }
+    } catch (e) {
+      // SecurityError = cross-origin, loaded successfully
+    }
+    iframe.dataset.loaded = 'true';
+  };
+
+  iframe.onerror = function () {
+    triggerNaverFallback(cafe);
+  };
+
+  // Small delay to let onload for about:blank fire first
+  setTimeout(() => { iframe.src = cafe.naverUrl; }, 30);
+
+  panel.classList.add('open');
+}
+
+function triggerNaverFallback(cafe) {
+  const iframe = document.getElementById('naverIframe');
+  const fallback = document.getElementById('naverIframeFallback');
+  iframe.style.display = 'none';
+  fallback.style.display = 'flex';
+  if (cafe.naverUrl) {
+    window.open(cafe.naverUrl, '_blank', 'noopener,noreferrer');
+    showToast('네이버 지도를 새 탭에서 열었습니다');
+  }
+}
+
+function closeNaverPanel() {
+  const panel = document.getElementById('naverPanel');
+  const iframe = document.getElementById('naverIframe');
+  panel.classList.remove('open');
+  setTimeout(() => {
+    iframe.src = '';
+    iframe.dataset.loaded = '';
+    currentNaverCafe = null;
+  }, 400);
+}
+
 // ── Panel ─────────────────────────────────────────────────────
 function openPanel() {
   document.getElementById('sidePanel').classList.add('open');
@@ -246,9 +315,22 @@ function setupEvents() {
   // Detail close
   document.getElementById('detailClose').addEventListener('click', closeDetail);
 
-  // Click map to close detail
+  // Naver panel close
+  document.getElementById('naverPanelClose').addEventListener('click', closeNaverPanel);
+
+  // Fallback reopen button
+  document.getElementById('fallbackReopenBtn').addEventListener('click', () => {
+    if (currentNaverCafe && currentNaverCafe.naverUrl) {
+      window.open(currentNaverCafe.naverUrl, '_blank', 'noopener,noreferrer');
+    }
+  });
+
+  // Click map to close detail and naver panel
   if (map) {
-    naver.maps.Event.addListener(map, 'click', closeDetail);
+    naver.maps.Event.addListener(map, 'click', () => {
+      closeDetail();
+      closeNaverPanel();
+    });
   }
 
   // Swipe down to close on mobile

@@ -628,6 +628,119 @@ html, body {
 .detail-link:hover { color: var(--orange); }
 
 /* ===========================
+   Naver iframe Panel
+=========================== */
+.naver-panel {
+  position: fixed;
+  top: var(--header-h); right: 0;
+  width: 420px;
+  height: calc(100vh - var(--header-h));
+  background: #ffffff;
+  border-left: 1px solid #E0E0E0;
+  display: flex;
+  flex-direction: column;
+  z-index: 110;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.naver-panel.open { transform: translateX(0); }
+
+.naver-panel-header {
+  padding: 16px 16px 14px;
+  border-bottom: 1px solid #E0E0E0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  background: #ffffff;
+}
+
+.naver-panel-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: #3D2B1F;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.naver-panel-close {
+  flex-shrink: 0;
+  width: 30px; height: 30px;
+  border: 1.5px solid #3D2B1F;
+  background: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3D2B1F;
+  transition: background 0.18s, color 0.18s;
+}
+.naver-panel-close:hover { background: #3D2B1F; color: #ffffff; }
+
+.naver-panel-body {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.naver-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.naver-iframe-fallback {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  height: 100%;
+  padding: 32px;
+  text-align: center;
+}
+
+.naver-iframe-fallback p {
+  font-family: var(--font-ko);
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+
+.fallback-reopen-btn {
+  padding: 10px 24px;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: opacity 0.18s;
+}
+.fallback-reopen-btn:hover { opacity: 0.8; }
+
+@media (max-width: 768px) {
+  .naver-panel {
+    width: 100%;
+    top: auto; bottom: 0;
+    height: 80vh;
+    border-left: none;
+    border-top: 2.5px solid var(--ink);
+    border-radius: 22px 22px 0 0;
+    transform: translateY(100%);
+  }
+  .naver-panel.open { transform: translateY(0); }
+}
+
+/* ===========================
    Toast
 =========================== */
 .toast {

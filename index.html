@@ -79,6 +79,23 @@
     </div>
   </div>
 
+  <!-- Naver Map iframe Panel -->
+  <aside class="naver-panel" id="naverPanel">
+    <div class="naver-panel-header">
+      <span class="naver-panel-name" id="naverPanelName"></span>
+      <button class="naver-panel-close" id="naverPanelClose" aria-label="닫기">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="naver-panel-body">
+      <iframe id="naverIframe" class="naver-iframe" src="" frameborder="0" allow="geolocation"></iframe>
+      <div class="naver-iframe-fallback" id="naverIframeFallback">
+        <p>네이버 지도가 새 탭에서 열렸습니다.</p>
+        <button class="fallback-reopen-btn" id="fallbackReopenBtn">다시 열기</button>
+      </div>
+    </div>
+  </aside>
+
   <!-- Toast -->
   <div class="toast" id="toast"></div>
 
