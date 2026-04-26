@@ -122,7 +122,7 @@ function renderCafeList(cafes) {
 
   list.innerHTML = cafes.map(c => `
     <div class="cafe-item" data-id="${c.id}" role="button" tabindex="0">
-      <img class="cafe-thumb" src="${c.img}" alt="${c.name}" loading="lazy" data-name="${c.name}" data-color="${getFallbackColor(c)}" onerror="imgFallback(this)" />
+      <div class="cafe-name-en">${c.nameEn || c.name}</div>
       <div class="cafe-info">
         <div class="cafe-item-name">${c.name}</div>
         <div class="cafe-item-addr">${c.address}</div>
@@ -187,18 +187,6 @@ function imgFallback(img) {
 // ── Detail card ───────────────────────────────────────────────
 function openDetail(cafe) {
   const card = document.getElementById('detailCard');
-
-  const img = document.getElementById('detailImg');
-  img.onerror = null;
-  img.style.display = 'block';
-  img.style.background = '';
-  img.alt = cafe.name;
-  img.src = cafe.img || '';
-  img.onerror = function () {
-    this.onerror = null;
-    this.style.background = getFallbackColor(cafe);
-    this.src = '';
-  };
 
   document.getElementById('detailName').textContent = cafe.name;
   document.getElementById('detailAddress').textContent = cafe.address;
