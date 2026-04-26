@@ -371,7 +371,7 @@ html, body {
   flex-shrink: 0;
   background: #ffffff;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .panel-count {
@@ -437,7 +437,9 @@ html, body {
   background: #FF6C1F;
   flex-shrink: 0;
   padding: 8px 6px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
