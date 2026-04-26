@@ -74,6 +74,7 @@ html, body {
   display: flex;
   align-items: center;
   gap: 14px;
+  overflow: visible;
 }
 
 /* ===========================
@@ -127,11 +128,11 @@ html, body {
 =========================== */
 .nav {
   display: flex;
-  gap: 7px;
+  gap: 12px;
   flex: 1;
   overflow: visible;
   align-items: center;
-  padding: 4px 0;
+  padding: 4px 4px;
 }
 
 .nav-btn {
@@ -430,7 +431,8 @@ html, body {
 
 .cafe-name-en {
   width: 72px;
-  height: auto;
+  height: 72px;
+  aspect-ratio: 1 / 1;
   border-radius: 12px;
   background: #FF6C1F;
   flex-shrink: 0;
