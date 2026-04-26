@@ -305,20 +305,17 @@ html, body {
 
 .marker-dot {
   width: 14px; height: 14px;
-  background: var(--ink);
-  border: 3px solid #fff;
+  background: #FF6C1F;
+  border: 2.5px solid #fff;
   border-radius: 50%;
-  box-shadow: 2px 2px 0 var(--ink);
-  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.28);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-
-.custom-marker.marker-open8  .marker-dot { background: var(--orange); box-shadow: 2px 2px 0 var(--orange); }
-.custom-marker.marker-open9  .marker-dot { background: var(--blue);   box-shadow: 2px 2px 0 var(--blue); }
-.custom-marker.marker-open10 .marker-dot { background: var(--purple); box-shadow: 2px 2px 0 var(--purple); }
 
 .custom-marker:hover .marker-dot,
 .custom-marker.active .marker-dot {
-  transform: scale(1.55);
+  transform: scale(1.6);
+  box-shadow: 0 3px 10px rgba(255,108,31,0.55);
 }
 
 .marker-label {
@@ -714,9 +711,10 @@ html, body {
 }
 
 .naver-iframe {
-  width: 100%;
-  height: calc(100% + 60px);
-  margin-top: -60px;
+  width: calc(100% + 56px);
+  height: calc(100% + 120px);
+  margin-top: -120px;
+  margin-left: -56px;
   border: none;
   display: block;
 }
