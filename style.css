@@ -129,13 +129,10 @@ html, body {
   display: flex;
   gap: 7px;
   flex: 1;
-  overflow-x: auto;
-  overflow-y: visible;
-  scrollbar-width: none;
+  overflow: visible;
   align-items: center;
   padding: 4px 0;
 }
-.nav::-webkit-scrollbar { display: none; }
 
 .nav-btn {
   --btn-color: #888;
@@ -192,7 +189,7 @@ html, body {
 .nav-btn[data-time="open9"] {
   --btn-color: #FF6C1F;
   --btn-text:  #fff;
-  padding-right: 22px;
+  padding-right: 24px;
   border-radius: 52% 48% 36% 64% / 64% 36% 52% 48%;
 }
 
@@ -446,12 +443,12 @@ html, body {
   display: block;
   width: 100%;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 800;
   color: #fff;
   text-align: center;
   letter-spacing: 0em;
-  line-height: 1.35;
+  line-height: 1.2;
   word-break: break-word;
 }
 
