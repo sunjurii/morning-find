@@ -162,7 +162,7 @@ html, body {
 }
 
 .nav-btn.active {
-  background: #ffffff;
+  background: var(--btn-color);
   color: #000000;
   border: 1px solid #000000;
   filter: none;
