@@ -92,7 +92,7 @@ function renderMarkers(cafes) {
     });
 
     naver.maps.Event.addListener(marker, 'click', () => {
-      openNaverPanel(cafe);
+      openDetail(cafe);
       setActiveMarker(cafe.id);
     });
 
@@ -219,26 +219,6 @@ function closeDetail() {
   document.querySelectorAll('.cafe-item').forEach(el => el.classList.remove('active'));
 }
 
-// ── Info panel (pin click) ────────────────────────────────────
-function openNaverPanel(cafe) {
-  document.getElementById('infoCafeName').textContent = cafe.name;
-
-  document.getElementById('infoBadges').innerHTML = cafe.tagLabels.map(t =>
-    `<span class="tag ${getTagClass(t)}">${t}</span>`
-  ).join('');
-
-  const iframe = document.getElementById('naverIframe');
-  iframe.src = cafe.naverUrl || '';
-
-  document.getElementById('infoPanel').classList.add('open');
-}
-
-function closeNaverPanel() {
-  const iframe = document.getElementById('naverIframe');
-  document.getElementById('infoPanel').classList.remove('open');
-  setTimeout(() => { iframe.src = ''; }, 400);
-}
-
 // ── Panel ─────────────────────────────────────────────────────
 function openPanel() {
   document.getElementById('sidePanel').classList.add('open');
@@ -302,14 +282,10 @@ function setupEvents() {
   // Detail close
   document.getElementById('detailClose').addEventListener('click', closeDetail);
 
-  // Info panel close
-  document.getElementById('infoPanelClose').addEventListener('click', closeNaverPanel);
-
-  // Click map to close detail and info panel
+  // Click map to close detail
   if (map) {
     naver.maps.Event.addListener(map, 'click', () => {
       closeDetail();
-      closeNaverPanel();
     });
   }
 

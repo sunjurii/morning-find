@@ -113,13 +113,13 @@ html, body {
    Bounce keyframe
 =========================== */
 @keyframes btn-bounce {
-  0%   { transform: translateY(0)    rotate(var(--rot, 0deg)); }
-  28%  { transform: translateY(-8px) rotate(var(--rot, 0deg)); }
-  48%  { transform: translateY(-2px) rotate(var(--rot, 0deg)); }
-  65%  { transform: translateY(-6px) rotate(var(--rot, 0deg)); }
-  80%  { transform: translateY(-3px) rotate(var(--rot, 0deg)); }
-  91%  { transform: translateY(-5px) rotate(var(--rot, 0deg)); }
-  100% { transform: translateY(-4px) rotate(var(--rot, 0deg)); }
+  0%   { transform: translateY(0); }
+  28%  { transform: translateY(-8px); }
+  48%  { transform: translateY(-2px); }
+  65%  { transform: translateY(-6px); }
+  80%  { transform: translateY(-3px); }
+  91%  { transform: translateY(-5px); }
+  100% { transform: translateY(-4px); }
 }
 
 /* ===========================
@@ -138,7 +138,6 @@ html, body {
 .nav-btn {
   --btn-color: #888;
   --btn-text:  var(--ink);
-  --rot: 0deg;
   flex-shrink: 0;
   padding: 8px 18px;
   border: none;
@@ -150,7 +149,6 @@ html, body {
   cursor: pointer;
   white-space: nowrap;
   line-height: 1;
-  transform: rotate(var(--rot));
   box-shadow: none;
   transition: filter 0.14s ease, box-shadow 0.14s ease;
 }
@@ -176,32 +174,29 @@ html, body {
   filter: none;
 }
 
-/* Per-button: unique color, blob shape, rotation */
+/* Per-button: unique color + blob shape */
 .nav-btn[data-time="all"] {
   --btn-color: #DEDF55;
   --btn-text:  var(--ink);
-  --rot: -2deg;
   border-radius: 62% 38% 46% 54% / 44% 58% 42% 56%;
 }
 
 .nav-btn[data-time="open8"] {
   --btn-color: #FDB52A;
   --btn-text:  var(--ink);
-  --rot: 1.5deg;
   border-radius: 40% 60% 55% 45% / 58% 42% 58% 42%;
 }
 
 .nav-btn[data-time="open9"] {
   --btn-color: #FF6C1F;
   --btn-text:  #fff;
-  --rot: -1deg;
+  padding-right: 22px;
   border-radius: 52% 48% 36% 64% / 64% 36% 52% 48%;
 }
 
 .nav-btn[data-time="open10"] {
   --btn-color: #D4B8DE;
   --btn-text:  var(--ink);
-  --rot: 2deg;
   border-radius: 44% 56% 64% 36% / 48% 64% 36% 52%;
 }
 
@@ -217,7 +212,6 @@ html, body {
 /* Meal sub-filter toggle */
 .nav-meal {
   --btn-color: #FEBAED;
-  --rot: -1.5deg;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -233,7 +227,6 @@ html, body {
   cursor: pointer;
   white-space: nowrap;
   line-height: 1;
-  transform: rotate(var(--rot));
   box-shadow: none;
   transition: filter 0.14s ease, box-shadow 0.14s ease;
 }
@@ -355,7 +348,7 @@ html, body {
 .side-panel {
   position: fixed;
   top: var(--header-h); right: 0;
-  width: 400px;
+  width: clamp(380px, 35vw, 480px);
   height: calc(100vh - var(--header-h));
   background: #ffffff;
   border-left: 1px solid #E0E0E0;
@@ -512,10 +505,9 @@ html, body {
   left: 50%;
   transform: translateX(-50%) translateY(calc(100% + 50px));
   width: min(390px, calc(100vw - 32px));
-  background: var(--cream);
+  background: #ffffff;
   border-radius: 24px;
-  border: 2.5px solid var(--ink);
-  box-shadow: 5px 5px 0 var(--ink);
+  border: 1px solid var(--ink);
   z-index: 150;
   overflow: hidden;
   transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -526,7 +518,7 @@ html, body {
 }
 
 @media (min-width: 769px) {
-  .detail-card.panel-open { left: calc(50% - 170px); }
+  .detail-card.panel-open { left: calc(50% - clamp(190px, 17.5vw, 240px)); }
 }
 
 .detail-close {
@@ -534,7 +526,7 @@ html, body {
   top: 10px; right: 10px;
   z-index: 10;
   width: 28px; height: 28px;
-  border: 2.5px solid var(--ink);
+  border: 1px solid var(--ink);
   background: #fff;
   border-radius: 50%;
   cursor: pointer;
@@ -542,7 +534,6 @@ html, body {
   align-items: center;
   justify-content: center;
   color: var(--ink);
-  box-shadow: 2px 2px 0 var(--ink);
   transition: background 0.18s, color 0.18s;
 }
 .detail-close:hover { background: var(--ink); color: #fff; }
@@ -613,112 +604,10 @@ html, body {
   font-weight: 600;
   color: var(--ink);
   text-decoration: none;
-  border-bottom: 2.5px solid var(--orange);
-  padding-bottom: 1px;
-  transition: color 0.18s, border-color 0.18s;
+  transition: color 0.18s;
 }
 .detail-link:hover { color: var(--orange); }
 
-/* ===========================
-   Info Panel (pin click, iframe)
-=========================== */
-.info-panel {
-  position: fixed;
-  top: var(--header-h); right: 0;
-  width: 420px;
-  height: calc(100vh - var(--header-h));
-  background: #ffffff;
-  border-left: 1px solid #E0E0E0;
-  display: flex;
-  flex-direction: column;
-  z-index: 110;
-  transform: translateX(100%);
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-}
-
-.info-panel.open { transform: translateX(0); }
-
-.info-panel-header {
-  padding: 14px 16px;
-  border-bottom: 1px solid #E0E0E0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-shrink: 0;
-  background: #ffffff;
-}
-
-.info-panel-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-}
-
-.info-cafe-name {
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.info-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.info-panel-close {
-  flex-shrink: 0;
-  width: 30px; height: 30px;
-  border: 1.5px solid #3D2B1F;
-  background: #ffffff;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #3D2B1F;
-  transition: background 0.18s, color 0.18s;
-}
-.info-panel-close:hover { background: #3D2B1F; color: #ffffff; }
-
-/* iframe — crop top Naver UI with overflow:hidden + negative margin */
-.info-iframe-wrap {
-  flex: 1;
-  overflow: hidden;
-  position: relative;
-  min-height: 0;
-}
-
-.naver-iframe {
-  width: calc(100% + 56px);
-  height: calc(100% + 120px);
-  margin-top: -120px;
-  margin-left: -56px;
-  border: none;
-  display: block;
-}
-
-@media (max-width: 768px) {
-  .info-panel {
-    width: 100%;
-    top: auto; bottom: 0;
-    height: 80vh;
-    border-left: none;
-    border-top: 2.5px solid var(--ink);
-    border-radius: 22px 22px 0 0;
-    transform: translateY(100%);
-  }
-  .info-panel.open { transform: translateY(0); }
-}
 
 /* ===========================
    Toast
