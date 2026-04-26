@@ -122,7 +122,7 @@ function renderCafeList(cafes) {
 
   list.innerHTML = cafes.map(c => `
     <div class="cafe-item" data-id="${c.id}" role="button" tabindex="0">
-      <div class="cafe-name-en">${c.nameEn || c.name}</div>
+      <div class="cafe-name-en"><span>${c.nameEn || c.name}</span></div>
       <div class="cafe-info">
         <div class="cafe-item-name">${c.name}</div>
         <div class="cafe-item-addr">${c.address}</div>
